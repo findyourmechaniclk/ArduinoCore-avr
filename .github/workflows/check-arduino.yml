@@ -1,3 +1,8 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 1 optimization:
+# - [MEDIUM] Add concurrency group to "check-arduino.yml"
+# Estimated savings: ~2 min/run
+#
 name: Check Arduino
 
 # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
@@ -10,6 +15,10 @@ on:
   workflow_dispatch:
   repository_dispatch:
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   lint:
     runs-on: ubuntu-latest
